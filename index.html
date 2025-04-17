@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katrina Dunn - Academic ePortfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            /* Deep forest gradient with mist */
+            background: linear-gradient(120deg, #233d2b 0%, #4e6e5d 60%, #b7d6b9 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .section {
+            min-height: auto;
+            padding: 2rem 0;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .quote {
+            border-left: 4px solid #2f6e31;
+            padding-left: 1rem;
+            font-style: italic;
+            margin: 1.5rem 0;
+            background: linear-gradient(90deg, #f8ffae 0%, #43c6ac 100%);
+            background-clip: padding-box;
+        }
+        .citation {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #43c6ac;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .active::after {
+            width: 100%;
+        }
+        .moss-green-50 {
+            background-color: #ecf4ec;
+        }
+        .moss-green-100 {
+            background-color: #d8e9d9;
+        }
+        .moss-green-200 {
+            background-color: #b7d6b9;
+        }
+        .moss-green-700 {
+            color: #2f6e31;
+        }
+        .moss-green-800 {
+            color: #265a28;
+        }
+        .moss-bg-700 {
+            background-color: #2f6e31;
+        }
+        .moss-border-100 {
+            border-color: #d8e9d9;
+        }
+        .moss-text-100 {
+            color: #d8e9d9;
+        }
+        /* Animated floating shapes - now minimalist forest elements */
+        .floating-shape {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.18;
+            animation: float 8s ease-in-out infinite;
+            pointer-events: none;
+            will-change: transform;
+            transition: filter 0.3s;
+        }
+        .floating-shape.shape1 {
+            top: 8%;
+            left: 7%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 0s;
+        }
+        .floating-shape.shape2 {
+            top: 65%;
+            left: 78%;
+            width: 90px;
+            height: 90px;
+            animation-delay: 2s;
+        }
+        .floating-shape.shape3 {
+            top: 78%;
+            left: 18%;
+            width: 100px;
+            height: 100px;
+            animation-delay: 4s;
+        }
+        .floating-shape.shape4 {
+            top: 30%;
+            left: 60%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 3s;
+        }
+        .floating-shape.shape5 { /* Fern */
+            top: 45%;
+            left: 25%;
+            width: 70px;
+            height: 70px;
+            animation-delay: 1s;
+        }
+        .floating-shape.shape6 { /* Acorn 2 */
+            top: 85%;
+            left: 85%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 5s;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1);}
+            50% { transform: translateY(-18px) scale(1.07);}
+            100% { transform: translateY(0) scale(1);}
+        }
+        /* Parallax effect for floating shapes */
+        .parallax {
+            transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+        }
+        /* Forest floor effect */
+        .forest-floor {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 120px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        /* Vignette overlay for main content */
+        .vignette-overlay {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 2;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(44,62,80,0.10) 100%);
+            mix-blend-mode: multiply;
+        }
+        /* Header animation */
+        .animated-gradient-text {
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 2s cubic-bezier(.4,0,.2,1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        /* Card hover effect */
+        .shadow-md, .shadow-lg {
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .shadow-md:hover, .shadow-lg:hover {
+            box-shadow: 0 10px 32px 0 rgba(67,198,172,0.25), 0 1.5px 3px 0 rgba(25,22,84,0.10);
+            transform: translateY(-8px) scale(1.03);
+        }
+        /* Profile and project image hover effect */
+        .profile-img, .project-img {
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s;
+        }
+        .profile-img:hover, .project-img:hover {
+            transform: scale(1.07) rotate(-2deg);
+            box-shadow: 0 12px 36px 0 rgba(67,198,172,0.18), 0 2px 6px 0 rgba(25,22,84,0.10);
+        }
+        /* Button style for future use */
+        .btn-animated {
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(67,198,172,0.15);
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn-animated:hover {
+            background: linear-gradient(90deg, #191654 0%, #43c6ac 100%);
+            transform: scale(1.05);
+        }
+        .bio-background {
+            background-image: url('treeroots.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            position: relative; /* Needed for potential pseudo-elements if blend mode isn't enough */
+            background-color: rgba(255, 255, 255, 0.85); /* Increased opacity for better readability */
+            background-blend-mode: overlay; /* Blend image with the background color */
+        }
+        /* Offset anchor scroll for sticky header */
+        #about, #walking, #research {
+            scroll-margin-top: 4rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Vignette overlay for subtle focus effect -->
+    <div class="vignette-overlay"></div>
+    <!-- Animated Floating SVG Shapes - minimalist forest elements -->
+    <svg class="floating-shape shape1" viewBox="0 0 120 120">
+        <!-- Abstract leaf -->
+        <ellipse cx="60" cy="60" rx="50" ry="20" fill="#2f6e31"/>
+        <ellipse cx="60" cy="60" rx="30" ry="10" fill="#b7d6b9" opacity="0.5"/>
+    </svg>
+    <svg class="floating-shape shape2" viewBox="0 0 90 90">
+        <!-- Pine needle cluster -->
+        <g stroke="#4e6e5d" stroke-width="3" stroke-linecap="round">
+            <line x1="45" y1="45" x2="80" y2="20"/>
+            <line x1="45" y1="45" x2="70" y2="70"/>
+            <line x1="45" y1="45" x2="20" y2="80"/>
+            <line x1="45" y1="45" x2="10" y2="30"/>
+        </g>
+    </svg>
+    <svg class="floating-shape shape3" viewBox="0 0 100 100">
+        <!-- Minimalist tree silhouette -->
+        <rect x="45" y="60" width="10" height="30" fill="#4e6e5d"/>
+        <ellipse cx="50" cy="55" rx="28" ry="18" fill="#2f6e31"/>
+    </svg>
+    <svg class="floating-shape shape4" viewBox="0 0 80 80">
+        <!-- Abstract acorn -->
+        <ellipse cx="40" cy="50" rx="18" ry="12" fill="#7c5c36"/>
+        <ellipse cx="40" cy="44" rx="18" ry="6" fill="#4e6e5d"/>
+    </svg>
+    <svg class="floating-shape shape5" viewBox="0 0 100 100">
+        <!-- Simple Fern -->
+        <path d="M50 90 Q 60 70 70 50 Q 80 30 90 10 M50 90 Q 40 70 30 50 Q 20 30 10 10 M40 70 L60 70 M35 60 L65 60 M30 50 L70 50 M25 40 L75 40 M20 30 L80 30" stroke="#2f6e31" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+    <svg class="floating-shape shape6" viewBox="0 0 60 60">
+        <!-- Simple Acorn 2 -->
+        <ellipse cx="30" cy="38" rx="15" ry="10" fill="#7c5c36"/>
+        <ellipse cx="30" cy="33" rx="15" ry="5" fill="#4e6e5d"/>
+        <line x1="30" y1="28" x2="32" y2="20" stroke="#4e6e5d" stroke-width="2"/>
+    </svg>
+    <!-- Forest floor effect -->
+    <svg class="forest-floor" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <defs>
+            <linearGradient id="forestMist" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#b7d6b9" stop-opacity="0.7"/>
+                <stop offset="100%" stop-color="#233d2b" stop-opacity="1"/>
+            </linearGradient>
+        </defs>
+        <ellipse cx="720" cy="110" rx="800" ry="60" fill="url(#forestMist)" />
+        <ellipse cx="400" cy="120" rx="300" ry="30" fill="#2f6e31" opacity="0.3"/>
+        <ellipse cx="1100" cy="120" rx="250" ry="25" fill="#4e6e5d" opacity="0.2"/>
+    </svg>
+    <!-- Header and Navigation -->
+    <header class="moss-green-50 shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold animated-gradient-text drop-shadow-lg">Katrina Dunn</h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#about" class="nav-link active text-gray-800 hover:moss-green-700 transition">About Me</a>
+                    <a href="#walking" class="nav-link text-gray-800 hover:moss-green-700 transition">Relational Walking</a>
+                    <a href="#research" class="nav-link text-gray-800 hover:moss-green-700 transition">Research Project</a>
+                </nav>
+                <button class="md:hidden" id="menu-toggle">
+                    <i class="fas fa-bars moss-green-700 text-xl"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="flex flex-col space-y-4 pt-4 pb-2">
+                    <a href="#about" class="text-gray-800 hover:moss-green-700 transition">About Me</a>
+                    <a href="#walking" class="text-gray-800 hover:moss-green-700 transition">Relational Walking</a>
+                    <a href="#research" class="text-gray-800 hover:moss-green-700 transition">Research Project</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- About Me Section -->
+        <section id="about" class="section bg-white">
+            <div class="container mx-auto px-6 py-8">
+                <h2 class="text-3xl font-bold text-center mb-10 moss-green-800 animated-gradient-text">About Me</h2>
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="md:w-1/3">
+                        <div class="rounded-full overflow-hidden shadow-lg moss-border-100 border-4 w-64 h-64 mx-auto profile-img">
+                            <img src="katrina.jpeg" alt="Portrait of Katrina Dunn" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 mt-6 md:mt-0 bio-background p-6 rounded-lg shadow-inner">
+                        <p class="text-lg text-gray-800 leading-relaxed relative z-10">
+                            My name is Katrina Dunn, a 21-year-old first-year student in Capilano University’s ECE program. I work as an after-school educator at Deep Cove out of school care and love engaging with young children. I volunteered at a daycare with kids aged 2–6, which taught me patience and emotional intelligence. I thrive in creative, people-focused environments and value balance and connection. I enjoy swimming, hiking, paddle boarding, and walking my dogs. I also run a furniture refinishing business, restoring and selling pieces online.
+                        </p>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <span class="px-3 py-1 moss-green-100 moss-green-700 rounded-full text-sm font-semibold">Early Child Education</span>
+                            <span class="px-3 py-1 moss-green-100 moss-green-700 rounded-full text-sm font-semibold">Dog Walking</span>
+                            <span class="px-3 py-1 moss-green-100 moss-green-700 rounded-full text-sm font-semibold">Funiture Refinishng</span>
+                            <span class="px-3 py-1 moss-green-100 moss-green-700 rounded-full text-sm font-semibold">Paddle Boarding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Relational Walking Section -->
+        <section id="walking" class="section bg-gray-50">
+            <div class="container mx-auto px-6 py-8">
+                <h2 class="text-3xl font-bold text-center mb-10 moss-green-800 animated-gradient-text">Relational Walking Reflection</h2>
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="mb-4 text-gray-700">
+                                I bundled up and headed for a winter walk through Deep Cove. Looking back on this walk I am noticing how privileged I am to walk here because I know that deep cove is
+located in the Tsleil-Waututh Nations land. I noticed some birds chirping in the background in the morning. I touched a leafy branch that smelled like earthy leaves. I
+observed the frosty ground condition, and as I kept on walking, I saw some construction. The sound of the construction was interruptive - the land was dead, all the
+trees were removed, and an orange steel fence surrounded the lot. A huge orange excavator had torn up the soil. To escape this eyesore, I started walking down this hill,
+and as I got close to the beach, I heard the waves crashing. It reminded me of a steady drum rhythm, pulsing the water back and forth. Powerful waves made me feel so
+insignificant, in relation to the ocean. The waves were in and out. I smelled the fresh salty air. As I thumped along the beach in my winter boots, I saw a beautiful big piece of
+musty smelling wood, that must have been washed up by the tide to the shore. I walked around this gigantic piece of wood; it was massive, and the wood was intricately woven,
+and twisted together. Donald believes that walking in nature is a gift, and relational teachings he thinks are
+                            </p>
+                            
+                            <div class="quote">
+                                <p>“gifted practices, and their related wisdom teachings, are enmeshed within a kinship connectivity of original treaties between human beings and all other forms of life”</p>
+                                <p class="citation">— Dwayne Donald, We Need a New Story: Walking and the wâhkôhtowin Imagination," <em>Journal of the Canadian Association for Curriculum Studies (JCACS)</em>Page 56, Vol. 18, No. 2, 2021</p>
+                            </div>
+                            <p class="mb-4 text-gray-700">    
+                                I couldn&#39;t agree with this more because through walking I always learn and observe new things from nature, and I gain respect and new
+perspectives from the people around me. Connections to the land is what makes Canada so unique, and in my opinion through walking, we can begin to connect with the nature itself and learn how to respect the people from the land.
+                                </p>
+                            
+                            
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <div class="rounded-lg overflow-hidden shadow-lg h-80 bg-gray-200 flex items-center justify-center">
+                                <video controls class="mx-auto rounded shadow h-72 bg-black" style="max-width:100%;">
+                                    <source src="Kat.mov" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="mt-6">
+                                <h4 class="font-semibold moss-green-700 mb-2">Audio Reflection</h4>
+                                <audio controls class="w-full rounded shadow bg-gray-100">
+                                    <source src="Kat.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Project Section -->
+        <section id="research" class="section bg-white">
+            <div class="container mx-auto px-6 py-8">
+                <h2 class="text-3xl font-bold text-center mb-10 moss-green-800 animated-gradient-text">Research Project</h2>
+                <div class="moss-green-50 rounded-lg shadow-md p-8">
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        <div class="md:w-1/3">
+                            <div class="rounded-lg overflow-hidden shadow-lg h-96 bg-gray-200 flex items-center justify-center">
+                                <!-- Replace with project image -->
+                                <img src="exercise.png" alt="Project Image" class="project-img">
+                            </div>
+                            <h4 class="font-semibold moss-green-700 mb-2 mt-4">Exercise Space for Elderly</h4>
+                            <p class="citation mt-2">
+                                <a href="https://www.melbourneplaygrounds.com.au/victoria-park-seniors-outdoor-gym-kew" target="_blank" rel="noopener noreferrer">
+                                    Victoria Park Seniors Outdoor Gym. (n.d.). Melbourne Playgrounds.
+                                </a>
+                            </p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <h3 class="text-2xl font-bold moss-green-800 mb-4">Inequity of Public Space: Open Space for Older People</h3>
+                            <p class="text-gray-700 mb-4">
+                                After learning more about the inequity of public space, particularly for marginalized people, I started thinking more openly about the Inclusivity and accessibility of public space. I recently went to Quesnel to visit my Opa, who is turning 91, and he is not able to walk without a cane or walker.  I started thinking about how difficult it might be for older people to get outside and enjoy activities. He is pretty isolated, and this got me thinking about public open space for older people, particularly around social interactions and well-being.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="px-3 py-1 moss-green-200 moss-green-800 rounded-full text-sm font-semibold">#Nature</span>
+                                <span class="px-3 py-1 moss-green-200 moss-green-800 rounded-full text-sm font-semibold">#Elderly Exercice Spaces</span>
+                                <span class="px-3 py-1 moss-green-200 moss-green-800 rounded-full text-sm font-semibold">#Social Interaction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold">Katrina Dunn</h3>
+                    <p class="text-gray-300">Academic ePortfolio</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-github text-xl"></i></a>
+                    <a href="#" class="text-gray-300 hover:text-white"><i class="fas fa-envelope text-xl"></i></a>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-gray-400 text-sm">
+                &copy; 2025 Academic ePortfolio. All content is not copyrighted.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Highlight active section in navigation
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Section fade-in animation
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+
+            // Parallax effect for floating shapes
+            const parallaxSpeeds = [0.2, 0.4, 0.3, 0.5, 0.35, 0.6];
+            document.querySelectorAll('.floating-shape').forEach((shape, idx) => {
+                const speed = parallaxSpeeds[idx % parallaxSpeeds.length];
+                const offset = window.scrollY * speed;
+                shape.classList.add('parallax');
+                shape.style.transform = `translateY(${offset}px)`;
+            });
+        });
+
+        // Initial fade-in for sections on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
